@@ -1,5 +1,6 @@
 import React from 'react';
 import TodoItems from './todo-items-list';
+import CreateTodos from './create-todo';
 
 const todos = [
 	{
@@ -23,8 +24,38 @@ export default class App extends React.Component {
 		return (
 			<div>
 				<h1>ToDo app</h1>
-				<TodoItems todos ={this.state.todos}/>
+				<CreateTodos  todos ={this.state.todos} createTask = {this.createTask.bind(this)}/>
+				<TodoItems 
+					toggleTask = {this.toggleTask.bind(this)}
+					editButton = {this.editButton.bind(this)}
+					deleteTask = {this.deleteTask.bind(this)}
+					todos ={this.state.todos}/>
 			</div>
 		);
+	}
+
+	toggleTask (task) {
+		const foundTodo = _.find(this.state.todos, todo => todo.task === task);
+		foundTodo.isCompleted = ! foundTodo.isCompleted;
+		this.setState({todos :this.state.todos});
+	}
+
+	deleteTask (task) {
+		_.remove(this.state.todos , todo => todo.task === task);
+		this.setState({todos:this.state.todos});
+	}
+
+	editButton(oldTask, newTask) {
+		const foundTodo = _.find(this.state.todos, todo => todo.task === oldTask);
+		foundTodo.task = newTask;
+		this.setState({todos:this.state.todos});
+	}
+
+	createTask (task) {
+		this.state.todos.push({
+			task,
+			isCompleted:false
+		});
+		this.setState({todos:this.state.todos});
 	}
 }

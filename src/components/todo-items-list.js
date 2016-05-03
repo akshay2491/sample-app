@@ -6,13 +6,13 @@ import CreateTodos from './create-todo';
 
 export default class TodoItems extends React.Component {
 	renderItems() {
-		return _.map(this.props.todos,(todo,index) => <TodosListItem key={index} {...todo} />);
+		const props =_.omit(this.props,'todos')
+		return _.map(this.props.todos,(todo,index) => <TodosListItem key={index} {...todo} {...props} />);
 	}
 
 	render() {
 		return (
 			<table>
-				<CreateTodos />
 				<TodoItemsHeader />
 				<tbody>
 				{this.renderItems()}

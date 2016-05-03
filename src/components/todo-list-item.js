@@ -14,7 +14,7 @@ export default class TodosListItem extends React.Component {
 		if(this.state.isEditing) 
 			return (
 				<td>
-					<button onClick={this.clickEdit.bind(this)}>Save</button>
+					<button onClick={this.saveTask.bind(this)}>Save</button>
 					<button onClick={this.onCancel.bind(this)}>cancel</button>
 				</td>
 			)
@@ -22,15 +22,43 @@ export default class TodosListItem extends React.Component {
 		return (
 				<td>
 				<button onClick={this.clickEdit.bind(this)}>Edit</button>
-				<button>Delete</button>
+				<button onClick={this.deleteTask.bind(this)}>Delete</button>
 				</td>
 			)
+	}
+
+	renderTask () {
+		const {task , isCompleted} = this.props;
+		const taskStyle = {
+			color:isCompleted ? 'red':'green',
+			cursor: 'pointer'
+		};
+
+		if(this.state.isEditing) {
+			return (
+				<td>
+				<form onSubmit={this.saveTask.bind(this)}>
+					<input type='text' defaultValue={task} ref='newTask'/>
+				</form>
+				</td>
+			)
+		}
+
+		return (
+		<td 
+		style={taskStyle}
+		onClick={this.props.toggleTask.bind(this,task)}
+		>
+		{task}
+		</td>
+		);
+
 	}
 
 	render() {
 		return (
 			<tr>
-				<td>{this.props.task}</td>
+				{this.renderTask()}
 				{this.changeState()}
 			</tr>
 		);
@@ -42,5 +70,18 @@ export default class TodosListItem extends React.Component {
 
 	onCancel() {
 		this.setState({isEditing: false});
+	}
+
+	saveTask(event) {
+		event.preventDefault();
+		const oldTask = this.props.task;
+		const newTask = this.refs.newTask.value;
+		this.props.editButton(oldTask,newTask);
+		this.setState({isEditing:false});
+	}
+
+	deleteTask () {
+		const task = this.props.task;
+		this.props.deleteTask(task);
 	}
 }
