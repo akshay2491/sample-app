@@ -1,4 +1,5 @@
 import React from 'react';
+import {Button} from 'react-bootstrap';
 
 export default class TodosListItem extends React.Component {
 
@@ -11,18 +12,19 @@ export default class TodosListItem extends React.Component {
 	}
 
 	changeState () {
+		var spacing = 10;
 		if(this.state.isEditing) 
 			return (
 				<td>
-					<button onClick={this.saveTask.bind(this)}>Save</button>
-					<button onClick={this.onCancel.bind(this)}>cancel</button>
+					<Button style={{marginLeft:spacing+'px'}} onClick={this.saveTask.bind(this)}>Save</Button>
+					<Button style={{marginLeft:spacing+'px'}} bsStyle="primary" onClick={this.onCancel.bind(this)}>Cancel</Button>
 				</td>
 			)
 
 		return (
 				<td>
-				<button onClick={this.clickEdit.bind(this)}>Edit</button>
-				<button onClick={this.deleteTask.bind(this)}>Delete</button>
+				<Button style={{marginLeft:spacing+'px'}} onClick={this.clickEdit.bind(this)}>Edit</Button>
+				<Button style={{marginLeft:spacing+'px'}} bsStyle="primary" onClick={this.deleteTask.bind(this)}>Delete</Button>
 				</td>
 			)
 	}
@@ -30,15 +32,15 @@ export default class TodosListItem extends React.Component {
 	renderTask () {
 		const {task , isCompleted} = this.props;
 		const taskStyle = {
-			color:isCompleted ? 'red':'green',
+			textDecoration:isCompleted ? 'line-through':'none',
 			cursor: 'pointer'
 		};
-
+		const width = 125;
 		if(this.state.isEditing) {
 			return (
 				<td>
 				<form onSubmit={this.saveTask.bind(this)}>
-					<input type='text' defaultValue={task} ref='newTask'/>
+					<input style={{width:width+'px'}} type='text' defaultValue={task} ref='newTask'/>
 				</form>
 				</td>
 			)

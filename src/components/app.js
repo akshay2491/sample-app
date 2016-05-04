@@ -1,6 +1,9 @@
 import React from 'react';
 import TodoItems from './todo-items-list';
 import CreateTodos from './create-todo';
+import {Jumbotron} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
+import {Navbar,Grid,Row,Col} from 'react-bootstrap';
 
 const todos = [
 	{
@@ -22,14 +25,32 @@ export default class App extends React.Component {
 	
 	render() {
 		return (
-			<div>
-				<h1>ToDo app</h1>
-				<CreateTodos  todos ={this.state.todos} createTask = {this.createTask.bind(this)}/>
-				<TodoItems 
-					toggleTask = {this.toggleTask.bind(this)}
-					editButton = {this.editButton.bind(this)}
-					deleteTask = {this.deleteTask.bind(this)}
-					todos ={this.state.todos}/>
+			<div className='container'>
+			<Navbar>
+			    <Navbar.Header>
+			      <Navbar.Brand>
+			        <a href="#">ToDo Application</a>
+			      </Navbar.Brand>
+			    </Navbar.Header>
+		  	</Navbar>
+			<Jumbotron>
+		  		<div className='container'>
+			  		<Grid>
+					    <Row className="show-grid">
+					      <Col xs={12} md={8}>
+					      	<CreateTodos  todos ={this.state.todos} createTask = {this.createTask.bind(this)}/>
+					      </Col>
+					      <Col xs={6} md={4}>
+					      	<TodoItems 
+								toggleTask = {this.toggleTask.bind(this)}
+								editButton = {this.editButton.bind(this)}
+								deleteTask = {this.deleteTask.bind(this)}
+								todos ={this.state.todos}/>
+					      </Col>
+					    </Row>
+				    </Grid>
+			    </div>
+			</Jumbotron>
 			</div>
 		);
 	}

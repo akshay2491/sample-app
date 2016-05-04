@@ -2,7 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import TodoItemsHeader from './todo-item-header';
 import TodosListItem from './todo-list-item';
-import CreateTodos from './create-todo';
+import {Table} from 'react-bootstrap';
 
 export default class TodoItems extends React.Component {
 	renderItems() {
@@ -12,12 +12,12 @@ export default class TodoItems extends React.Component {
 
 	render() {
 		return (
-			<table>
+			<Table striped bordered condensed hover>
 				<TodoItemsHeader />
 				<tbody>
 				{this.renderItems()}
 				</tbody>
-			</table>	
+			</Table>	
 		);
 	}
 }
